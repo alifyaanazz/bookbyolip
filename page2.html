@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>To My Dearest — Page 3 — If I Could Freeze Time</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Great+Vibes&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ivory:#f9f5eb;
+    --maroon:#4b1e25;
+    --black:#0d0d0d;
+    --gold:#d4af37;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;padding:0;font-family:'Playfair Display',serif;background:
+    radial-gradient(circle at 10% 10%, rgba(75,30,37,0.45) 0%, rgba(10,10,10,1) 60%);color:var(--ivory)}
+
+  .container{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:40px;
+  }
+
+  .card{
+    width:920px;
+    max-width:94%;
+    background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:18px;
+    border:1px solid rgba(212,175,55,0.12);
+    padding:48px;
+    position:relative;
+    overflow:hidden;
+    box-shadow: 0 30px 90px rgba(0,0,0,0.7), 0 6px 20px rgba(212,175,55,0.04) inset;
+  }
+
+  /* floating golden particles */
+  .particles{
+    position:absolute;inset:0;pointer-events:none;
+  }
+  .particle{
+    position:absolute;
+    width:6px;height:6px;border-radius:50%;
+    background:var(--gold);opacity:0.9;
+    box-shadow:0 0 12px rgba(212,175,55,0.9);
+    animation:floatUp linear infinite;
+  }
+  @keyframes floatUp{
+    from { transform: translateY(40vh) scale(0.8); opacity:0; }
+    20% { opacity:0.9; }
+    to { transform: translateY(-30vh) scale(1.1); opacity:0; }
+  }
+
+  .left, .right{
+    display:inline-block;vertical-align:top;
+  }
+
+  .left{
+    width:46%;
+    padding-right:28px;
+  }
+
+  .right{
+    width:52%;
+    padding-left:28px;
+  }
+
+  /* clock */
+  .clock-wrap{
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  .clock{
+    width:300px;height:300px;border-radius:50%;
+    background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.03), rgba(0,0,0,0.35));
+    border:8px solid rgba(212,175,55,0.12);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6), inset 0 6px 20px rgba(212,175,55,0.03);
+    position:relative;
+    cursor:pointer;
+    transition: transform .4s ease;
+  }
+  .clock:hover{ transform: scale(1.03); }
+
+  .face{
+    position:absolute;inset:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    background: radial-gradient(circle at 30% 25%, rgba(75,30,37,0.12), rgba(0,0,0,0.3));
+  }
+
+  .tick{
+    position:absolute;width:6px;height:18px;background:var(--gold);left:50%;transform-origin:left center;
+    opacity:0.9;border-radius:3px;
+  }
+  /* place hour ticks every 30deg */
+  .tick.t1{ transform: translateX(-50%) rotate(0deg) translateX(130px); top:50%; }
+  .tick.t2{ transform: translateX(-50%) rotate(30deg) translateX(130px); top:50%; }
+  .tick.t3{ transform: translateX(-50%) rotate(60deg) translateX(130px); top:50%; }
+  .tick.t4{ transform: translateX(-50%) rotate(90deg) translateX(130px); top:50%; }
+  .tick.t5{ transform: translateX(-50%) rotate(120deg) translateX(130px); top:50%; }
+  .tick.t6{ transform: translateX(-50%) rotate(150deg) translateX(130px); top:50%; }
+  .tick.t7{ transform: translateX(-50%) rotate(180deg) translateX(130px); top:50%; }
+  .tick.t8{ transform: translateX(-50%) rotate(210deg) translateX(130px); top:50%; }
+  .tick.t9{ transform: translateX(-50%) rotate(240deg) translateX(130px); top:50%; }
+  .tick.t10{ transform: translateX(-50%) rotate(270deg) translateX(130px); top:50%; }
+  .tick.t11{ transform: translateX(-50%) rotate(300deg) translateX(130px); top:50%; }
+  .tick.t12{ transform: translateX(-50%) rotate(330deg) translateX(130px); top:50%; }
+
+  .hand{
+    position:absolute;left:50%;top:50%;transform-origin:50% 100%;
+    transform: translate(-50%,-100%) rotate(0deg);
+    border-radius:6px;
+  }
+  .hand.hour{ width:8px; height:70px; background:linear-gradient(180deg,var(--gold),rgba(212,175,55,0.6)); z-index:6; }
+  .hand.minute{ width:6px; height:100px; background:linear-gradient(180deg,rgba(255,255,255,0.9),rgba(212,175,55,0.7)); z-index:7; }
+  .hand.second{ width:3px; height:120px; background:var(--maroon); box-shadow:0 0 8px rgba(212,175,55,0.6); z-index:8; }
+
+  /* center pivot */
+  .pivot{ position:absolute; width:18px; height:18px; background:var(--gold); border-radius:50%; left:50%; top:50%; transform:translate(-50%,-50%); box-shadow:0 4px 10px rgba(0,0,0,0.5); z-index:9;}
+
+  /* animate hands */
+  .rotate-second{ animation:rotate-sec 60s linear infinite; transform-origin:50% 100%; }
+  .rotate-minute{ animation:rotate-min 3600s linear infinite; transform-origin:50% 100%; }
+  .rotate-hour{ animation:rotate-hour 43200s linear infinite; transform-origin:50% 100%; }
+
+  @keyframes rotate-sec{ from{transform: translate(-50%,-100%) rotate(0deg)} to{transform: translate(-50%,-100%) rotate(360deg)} }
+  @keyframes rotate-min{ from{transform: translate(-50%,-100%) rotate(0deg)} to{transform: translate(-50%,-100%) rotate(360deg)} }
+  @keyframes rotate-hour{ from{transform: translate(-50%,-100%) rotate(0deg)} to{transform: translate(-50%,-100%) rotate(360deg)} }
+
+  /* right content (poem) */
+  .title{
+    font-family:'Great Vibes', cursive;
+    font-size:48px;color:var(--gold);margin:0 0 6px 0;
+  }
+  .subtitle{ font-size:18px;color:rgba(249,245,235,0.9); margin-bottom:18px; }
+  .poem{
+    font-size:20px; line-height:1.9;color:var(--ivory); opacity:0.95;
+    max-width:420px;margin-top:12px;
+  }
+
+  .frozen-note{
+    margin-top:28px;color:var(--gold);font-style:italic;font-size:18px;opacity:0;
+    transition:opacity .8s ease;
+  }
+
+  .next-btn{
+    display:inline-block;margin-top:28px;background:var(--gold);color:var(--black);
+    padding:12px 36px;border-radius:30px;text-decoration:none;font-weight:700;
+    box-shadow:0 10px 30px rgba(212,175,55,0.3);border:none;cursor:pointer;opacity:0;transform:translateY(12px);
+    transition: all .6s cubic-bezier(.2,.9,.2,1);
+  }
+
+  .next-btn.show{ opacity:1; transform:translateY(0); }
+
+  /* responsive */
+  @media (max-width:880px){
+    .left,.right{ display:block;width:100%; padding:0; }
+    .left{ margin-bottom:26px }
+    .card{ padding:28px }
+    .title{ font-size:38px }
+    .clock{ width:240px;height:240px }
+  }
+
+</style>
+</head>
+<body>
+  <div class="container">
+    <div class="card" role="main" aria-labelledby="page3title">
+      <div class="particles" id="particles"></div>
+
+      <div style="display:flex;gap:2%;align-items:center;">
+        <div class="left">
+          <div class="clock-wrap" title="Klik jam untuk membekukan waktu">
+            <div class="clock" id="clock" aria-label="Jam — klik untuk membekukan waktu">
+              <div class="face">
+                <!-- hour ticks -->
+                <div class="tick t1"></div><div class="tick t2"></div><div class="tick t3"></div>
+                <div class="tick t4"></div><div class="tick t5"></div><div class="tick t6"></div>
+                <div class="tick t7"></div><div class="tick t8"></div><div class="tick t9"></div>
+                <div class="tick t10"></div><div class="tick t11"></div><div class="tick t12"></div>
+
+                <div class="hand hour rotate-hour" id="hourHand"></div>
+                <div class="hand minute rotate-minute" id="minuteHand"></div>
+                <div class="hand second rotate-second" id="secondHand"></div>
+
+                <div class="pivot"></div>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align:center;margin-top:18px;color:rgba(249,245,235,0.8)">
+            <div style="font-weight:700">Maukah kamu membantuku untuk membekukan waktu?...</div>
+            <div style="font-size:13px;margin-top:6px">(klik jam untuk menangkap momen)</div>
+          </div>
+        </div>
+
+        <div class="right">
+          <h2 id="page3title" class="title">If I Could Freeze Time</h2>
+          <div class="subtitle">Satu hal yang membuat aku berharap dunia berhenti - untuk biarkan kamu tetap ada di pelukku.</div>
+
+          <div class="poem" id="poem">
+            Jika aku bisa membekukan sebuah momen, <br>
+            mungkin itu ketika kamu sedang tertawa bahagia sembari menatapku — <br>
+            ketika segalanya hening, dan hanya kamu yang tersisa. <br><br>
+
+            Aku akan menggenggam setiap detik seperti sebuah nyawa, <br>
+            menyimpan kehangatannya di antara telapak tanganku, <br>
+            dan menghirupnya kembali ketika dunia terasa begitu berat.  
+          </div>
+
+          <div class="frozen-note" id="frozenNote">Terima kasih, sayang</div>
+
+          <button class="next-btn" id="nextBtn" onclick="location.href='page3.html'">Next Page →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // create golden particles randomly
+  const particlesContainer = document.getElementById('particles');
+  const PARTICLE_COUNT = 26;
+  for (let i=0;i<PARTICLE_COUNT;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = 4 + Math.random()*8;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = (Math.random()*100) + '%';
+    p.style.top = (60 + Math.random()*40) + '%';
+    p.style.opacity = 0.2 + Math.random()*0.9;
+    const dur = 8 + Math.random()*12;
+    p.style.animationDuration = dur + 's';
+    p.style.animationDelay = (Math.random()*-8) + 's';
+    particlesContainer.appendChild(p);
+  }
+
+  // clock freeze logic
+  const clock = document.getElementById('clock');
+  const sec = document.getElementById('secondHand');
+  const min = document.getElementById('minuteHand');
+  const hr = document.getElementById('hourHand');
+  const frozenNote = document.getElementById('frozenNote');
+  const nextBtn = document.getElementById('nextBtn');
+
+  let frozen = false;
+
+  // function to pause animations by computing current rotation and applying inline styles
+  function freezeClock(){
+    if (frozen) return;
+    frozen = true;
+
+    // compute computed transforms (approximate by reading current time and setting hands accordingly)
+    const now = new Date();
+    const seconds = now.getSeconds() + now.getMilliseconds()/1000;
+    const minutes = now.getMinutes() + seconds/60;
+    const hours = (now.getHours()%12) + minutes/60;
+
+    const secDeg = (seconds/60) * 360;
+    const minDeg = (minutes/60) * 360;
+    const hrDeg = (hours/12) * 360;
+
+    // stop the CSS animations and set absolute rotation
+    sec.style.animation = 'none';
+    min.style.animation = 'none';
+    hr.style.animation = 'none';
+
+    sec.style.transform = `translate(-50%,-100%) rotate(${secDeg}deg)`;
+    min.style.transform = `translate(-50%,-100%) rotate(${minDeg}deg)`;
+    hr.style.transform = `translate(-50%,-100%) rotate(${hrDeg}deg)`;
+
+    // add a soft pulse to card to highlight frozen moment
+    document.querySelector('.card').style.boxShadow = '0 40px 120px rgba(75,30,37,0.45), 0 6px 30px rgba(212,175,55,0.06) inset';
+    document.querySelector('.card').style.transform = 'scale(1.008)';
+
+    // reveal the frozen note and next button gently
+    setTimeout(()=>{ frozenNote.style.opacity = '1'; }, 650);
+    setTimeout(()=>{ nextBtn.classList.add('show'); }, 1200);
+  }
+
+  // clicking the clock freezes time
+  clock.addEventListener('click', freezeClock);
+
+  // also freeze if user double-click poem (bonus)
+  document.getElementById('poem').addEventListener('dblclick', freezeClock);
+
+  // accessibility: allow keyboard freeze (press Space when clock focused)
+  clock.setAttribute('tabindex','0');
+  clock.addEventListener('keydown',(e)=>{
+    if(e.code === 'Space' || e.key === ' ' || e.code === 'Enter') { e.preventDefault(); freezeClock(); }
+  });
+
+  // small gentle entrance for particles (optional)
+  window.addEventListener('load', ()=> {
+    // nothing else required; particles already animating via CSS
+  });
+</script>
+</body>
+</html>

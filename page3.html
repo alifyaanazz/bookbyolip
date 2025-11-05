@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>A Letter — To My Dearest, Andrian Fahriana</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Satisfy&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --ivory: #f8f3e9;
+    --maroon:#4a1f2a;
+    --gold:#d4af37;
+    --ink:#3b2b2b;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0;background:linear-gradient(180deg,#12080a 0%, #2b1216 60%);font-family:'Playfair Display',serif;color:var(--ink);-webkit-font-smoothing:antialiased;display:flex;align-items:center;justify-content:center;padding:24px;}
+
+  /* card / paper */
+  .paper-wrap{
+    width:920px; max-width:95%; background:
+      linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+    border-radius:16px; padding:36px; position:relative; overflow:hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.7), inset 0 0 60px rgba(212,175,55,0.03);
+  }
+
+  /* textured paper background */
+  .paper{
+    background: radial-gradient(circle at 10% 10%, rgba(255,255,255,0.02), transparent 15%),
+                linear-gradient(180deg, var(--ivory), #fbf7ee 60%);
+    border-radius:12px; padding:48px 56px; position:relative; min-height:560px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    border: 1px solid rgba(0,0,0,0.03);
+    overflow:hidden;
+  }
+
+  /* decorative top */
+  .header{
+    display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;
+  }
+  .dedication{
+    font-family:'Satisfy', cursive; color:var(--maroon); font-size:36px; letter-spacing:0.6px;
+  }
+  .date{
+    color:rgba(0,0,0,0.45); font-size:14px;
+  }
+
+  /* letter area */
+  .letter {
+    background:transparent; color:var(--ink); font-size:20px; line-height:1.9; max-width:720px;
+    margin-top:18px; white-space:pre-wrap; word-break:break-word;
+    position:relative; min-height:360px;
+    font-family:'Playfair Display', serif;
+  }
+
+  /* each char span hidden until reveal */
+  .letter span.char{ opacity:0; display:inline-block; transform: translateY(2px); transition: opacity .08s linear, transform .08s linear; color:var(--ink); }
+  .letter span.char.visible{ opacity:1; transform: translateY(0); }
+
+  /* pen */
+  .pen {
+    position:absolute; width:54px; height:54px; right:80px; bottom:80px; pointer-events:none; transform-origin:50% 50%;
+    transition: transform .08s linear, left .08s linear, top .08s linear;
+    will-change: transform, left, top;
+    z-index:18;
+  }
+
+  /* small flourish at bottom */
+  .signature{
+    margin-top:22px; font-family:'Satisfy',cursive; color:var(--maroon); font-size:28px;
+  }
+
+  /* Next Button (hidden until finished) */
+  .next-btn{
+    display:inline-block; margin-top:24px; padding:12px 36px; border-radius:28px; background:var(--gold); color:#0a0a0a;
+    font-weight:700; text-decoration:none; box-shadow:0 10px 30px rgba(212,175,55,0.25); border:none; cursor:pointer; opacity:0; transform:translateY(8px);
+    transition: all .6s cubic-bezier(.2,.9,.2,1);
+  }
+  .next-btn.show{ opacity:1; transform:translateY(0); }
+
+  /* overlay page transition (book close effect) */
+  .page-transition {
+    position: fixed; inset: 0; z-index: 9999; pointer-events:none;
+    background: linear-gradient(135deg, rgba(10,6,6,0.95), rgba(74,31,42,0.96));
+    transform-origin: left center;
+    transform: scaleX(0);
+    transition: transform 0.85s cubic-bezier(.77,0,.175,1);
+  }
+  .page-transition.active{ transform: scaleX(1); pointer-events:auto; }
+
+  /* responsive */
+  @media (max-width:720px){
+    .paper{ padding:28px; min-height:520px }
+    .pen{ width:44px; height:44px; right:20px; bottom:60px; }
+    .dedication{ font-size:28px }
+    .letter{ font-size:18px }
+  }
+</style>
+</head>
+<body>
+  <div class="paper-wrap" role="main" aria-labelledby="letterTitle">
+    <div class="paper" id="paper">
+      <div class="header">
+        <div class="dedication">To my dearest, Anian...</div>
+        <div class="date" id="dateText"></div>
+      </div>
+
+      <div id="letter" class="letter" aria-live="polite" aria-atomic="true"></div>
+
+      <div class="signature" id="signature" style="opacity:0;transition:opacity .9s ease;">— Olip</div>
+
+      <button id="nextBtn" class="next-btn" onclick="goToNextPage('page4.html')">Next Page →</button>
+
+      <!-- decorative pen SVG (will be positioned by JS) -->
+      <div id="pen" class="pen" aria-hidden="true">
+        <!-- simple elegant fountain-pen icon -->
+        <svg viewBox="0 0 64 64" width="54" height="54" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#f9edc9"/>
+              <stop offset="1" stop-color="#d4af37"/>
+            </linearGradient>
+          </defs>
+          <g transform="rotate(-25 32 32)">
+            <rect x="8" y="26" width="40" height="6" rx="3" fill="#2b1f1a" />
+            <rect x="6" y="32" width="44" height="6" rx="3" fill="#987a55" />
+            <path d="M46 20c-6 6-18 18-18 18l-6 2 2-6s12-12 18-18c4-4 10-4 14 0 4 4 4 10 0 14l-8-8z" fill="url(#g)" />
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- page transition overlay -->
+  <div id="pageTransition" class="page-transition" aria-hidden="true"></div>
+
+<script>
+  // Surat yang akan 'ditulis'
+  const letterText = `Dear Anian,
+
+Aku memang tidak selalu mampu untuk mengungkapkan semua dengan kata-kata,
+ tentang bagaimana kamu mampu menenangkan hatiku, atau keajaiban-keajaiban kecil yang aku lihat dalam setiap kebaikan hati kamu. 
+ Namun malam ini, di hari ulang tahunmu, aku ingin kamu tau semua itu. 
+ Kamu selalu menjadi tempat peristirahatanku ketika dunia sedang jahat, 
+ kamu adalah salah satu alasan kenapa aku masih bangun selepas tidur ditengah runyamnya hidup aku, 
+ dan kamu adalah sebuah harapan besar dalam hidupku. Dan percayalah, 
+ aku adalah manusia yang paling bersyukur atas hadirnya kamu di dunia ini setelah orang tuamu.
+  Aku juga berterima kasih kepada Ibu, karena telah melahirkan laki-laki baik yang mampu menjaga dan menghormati wanita. 
+  Selamat ulang tahun ya, Anian. Tetaplah hidup dengan bahagia dan menebar kebahagiaan.
+`;
+
+  // setup date
+  const dateText = document.getElementById('dateText');
+  const today = new Date();
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  dateText.textContent = today.toLocaleDateString('id-ID', options);
+
+  // prepare letter container: wrap each character in span.char
+  const letterContainer = document.getElementById('letter');
+  const chars = Array.from(letterText);
+  letterContainer.innerHTML = ''; // clear
+
+  chars.forEach((ch, idx) => {
+    const span = document.createElement('span');
+    span.className = 'char';
+    // preserve spaces and newlines visually
+    if (ch === '\n') {
+      span.innerHTML = '<br>';
+    } else if (ch === ' ') {
+      span.innerHTML = '&nbsp;';
+    } else {
+      span.textContent = ch;
+    }
+    letterContainer.appendChild(span);
+  });
+
+  const spans = Array.from(letterContainer.querySelectorAll('span.char'));
+  const pen = document.getElementById('pen');
+  const signature = document.getElementById('signature');
+  const nextBtn = document.getElementById('nextBtn');
+  let i = 0;
+  let penVisible = true;
+
+  // position pen initially near the end of container
+  function placePenAtSpan(index){
+    const span = spans[index];
+    if (!span) return;
+    // get bounding rects
+    const sRect = span.getBoundingClientRect();
+    const containerRect = letterContainer.getBoundingClientRect();
+    // prefer to place pen slightly below and to the right of the character
+    const left = sRect.left - containerRect.left + sRect.width + 6;
+    const top = sRect.top - containerRect.top + sRect.height - 6;
+    // set pen position relative to paper
+    pen.style.left = `${Math.max(16, left)}px`;
+    pen.style.top = `${Math.max(24, top)}px`;
+    // small tilt to simulate writing motion
+    pen.style.transform = `rotate(${(Math.sin(index/5) * 6) - 12}deg)`;
+  }
+
+  // reveal characters one by one and move pen
+  function revealNext(){
+    if (i >= spans.length){
+      // finished
+      pen.style.opacity = 0;
+      signature.style.opacity = 1;
+      nextBtn.classList.add('show');
+      return;
+    }
+
+    const span = spans[i];
+    // skip if span contains just <br> (newline) or &nbsp; (space) but still move pen
+    if (span.innerHTML === '<br>' || span.innerHTML === '&nbsp;'){
+      span.classList.add('visible');
+      placePenAtSpan(i);
+      i++;
+      // shorter delay for spaces/newlines
+      setTimeout(revealNext, 18);
+      return;
+    }
+
+    // reveal
+    span.classList.add('visible');
+    placePenAtSpan(i);
+
+    // variable typing speed to mimic handwriting
+    const base = 28; // ms
+    const variance = Math.random() * 120; // randomness
+    const delay = base + variance;
+
+    i++;
+    setTimeout(revealNext, delay);
+  }
+
+  // wait until layout done to position pen properly
+  window.addEventListener('load', () => {
+    // initial pen placement at first non-space char
+    let firstIndex = spans.findIndex(s => !(s.innerHTML === '&nbsp;' || s.innerHTML === '<br>'));
+    if (firstIndex < 0) firstIndex = 0;
+    placePenAtSpan(firstIndex);
+
+    // small fade-in for pen
+    pen.style.opacity = 1;
+    // start revealing after a short pause
+    setTimeout(() => {
+      revealNext();
+    }, 700);
+  });
+
+  // Recalculate pen position on resize occasionally
+  window.addEventListener('resize', () => {
+    // if still writing, reposition pen
+    const idx = Math.min(Math.max(0, i-1), spans.length-1);
+    setTimeout(()=> placePenAtSpan(idx), 120);
+  });
+
+  // Page transition overlay logic
+  const pageTransition = document.getElementById('pageTransition');
+  function goToNextPage(url){
+    pageTransition.classList.add('active');
+    // give a moment for overlay and then navigate
+    setTimeout(()=> { window.location.href = url; }, 780);
+  }
+
+  // Accessibility: allow pressing Enter to go next when button is visible
+  nextBtn.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') goToNextPage('page4.html');
+  });
+
+  // hide pen on touch devices until first tap — better UX
+  // (pen is decorative; clicking Next is fine)
+</script>
+</body>
+</html>
